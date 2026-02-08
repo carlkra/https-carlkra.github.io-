@@ -5,6 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carl Krause - Digital Analytics Specialist</title>
     
+    <!-- Google Consent Mode - Default State -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        
+        // Set default consent to 'denied' as a placeholder
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+    </script>
+    
+    <!-- Klaro! Cookie Consent Configuration -->
+    <script>
+        var klaroConfig = {
+            elementID: 'klaro',
+            
+            // Styling to match your black & white theme
+            styling: {
+                theme: ['light'],
+            },
+            
+            // Don't show the "Learn more" link (you have a privacy page)
+            mustConsent: false,
+            acceptAll: true,
+            hideDeclineAll: false,
+            hideLearnMore: false,
+            
+            // Translations
+            translations: {
+                zz: {
+                    privacyPolicyUrl: '/privacy.html',
+                },
+                en: {
+                    consentModal: {
+                        title: 'Cookie Preferences',
+                        description: 'This website uses analytics to understand how visitors interact with the site. You can choose which services to enable.',
+                    },
+                    googleAnalytics: {
+                        description: 'Google Analytics 4 helps us understand site usage and improve your experience.',
+                    },
+                    purposes: {
+                        analytics: 'Analytics',
+                    },
+                },
+            },
+            
+            // Services configuration
+            services: [
+                {
+                    name: 'googleAnalytics',
+                    title: 'Google Analytics 4',
+                    purposes: ['analytics'],
+                    required: false,
+                    optOut: false,
+                    default: false,
+                    
+                    // Callback functions for consent state changes
+                    callback: function(consent, service) {
+                        // Update Google Consent Mode based on user choice
+                        if (consent === true) {
+                            gtag('consent', 'update', {
+                                'analytics_storage': 'granted'
+                            });
+                        } else {
+                            gtag('consent', 'update', {
+                                'analytics_storage': 'denied'
+                            });
+                        }
+                    },
+                },
+            ],
+        };
+    </script>
+    
+    <!-- Klaro! Cookie Consent Library -->
+    <script defer type="application/javascript" 
+            src="https://cdn.kiprotect.com/klaro/v0.7/klaro.js"></script>
+    
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
