@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA4 Analytics Tagging Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .main-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin-bottom: 0.5rem;
+        }
+        
+        .main-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .main-menu a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .utility-navigation {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            font-size: 0.9rem;
+        }
+        
+        .utility-navigation a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+        
+        .utility-navigation a:hover {
+            color: white;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: #34495e;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 8px;
+        }
+        
+        .hero h1 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .video-container {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        
+        video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .download-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        
+        .download-card:hover {
+            border-color: #3498db;
+        }
+        
+        .download-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .download-link:hover {
+            background: #2980b9;
+        }
+        
+        .accordion {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        .accordion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .accordion-header {
+            padding: 1.5rem;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background: #f8f9fa;
+        }
+        
+        .accordion-header.active {
+            background: #e3f2fd;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #fafafa;
+        }
+        
+        .accordion-content.active {
+            max-height: 500px;
+        }
+        
+        .accordion-content-inner {
+            padding: 1.5rem;
+        }
+        
+        .tab-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .tab-nav {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e1e8ed;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .tab-button:hover {
+            background: #e1e8ed;
+        }
+        
+        .tab-button.active {
+            background: white;
+            border-bottom: 3px solid #3498db;
+            margin-bottom: -2px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip-trigger {
+            color: #3498db;
+            border-bottom: 1px dotted #3498db;
+            cursor: help;
+        }
+        
+        .tooltip-content {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .tooltip-content::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #2c3e50;
+        }
+        
+        .tooltip-wrapper:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .lead-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-button:hover {
+            background: #229954;
+        }
+        
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .link-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+            text-align: center;
+        }
+        
+        .external-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #9b59b6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        .external-link:hover {
+            background: #8e44ad;
+        }
+        
+        footer {
+            background: #34495e;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-nav a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+        
+        .footer-nav a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+        
+        .social-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 0.5rem;
+        }
+        
+        .social-links a:hover {
+            color: white;
+        }
+        
+        .interstitial-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .interstitial-modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .interstitial-modal h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .interstitial-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .interstitial-button {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        
+        .interstitial-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .proceed-button {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .cancel-button {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .test-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-indicator">🧪 Analytics Test Page</div>
+
+    <header id="site-header">
+        <div class="header-content">
+            <a href="https://carlkra.github.io/https-carlkra.github.io-/" class="logo" id="logo-link">
+                Analytics Testing Lab
+            </a>
+            
+            <nav>
+                <ul class="main-menu" id="main-navigation">
+                    <li><a href="https://carlkra.github.io/https-carlkra.github.io-/about.html" id="nav-about">About Us</a></li>
+                    <li><a href="https://carlkra.github.io/https-carlkra.github.io-/services.html" id="nav-services" class="interstitial-trigger">Services</a></li>
+                    <li><a href="https://carlkra.github.io/https-carlkra.github.io-/contact.html" id="nav-contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <ul class="utility-navigation" id="utility-nav">
+                <li><a href="https://www.linkedin.com/in/carlkra" target="_blank" id="util-linkedin">LinkedIn</a></li>
+                <li><a href="https://example.com/login" target="_blank" id="util-login">Login</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="hero-section">
+            <h1>GA4 Analytics Tagging Test Page</h1>
+            <p>This page contains examples of every tracking scenario from our GA4 taxonomy</p>
+            <a href="https://carlkra.github.io/https-carlkra.github.io-/get-started.html" class="cta-button" id="hero-cta">
+                Get Started
+            </a>
+        </section>
+
+        <section id="video-section">
+            <h2>Video Content</h2>
+            <p>This section tests video tracking events</p>
+            <div class="video-container">
+                <video id="test-video" controls>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <section id="content-links">
+            <h2>Content & Downloads</h2>
+            <p>This section contains internal links and 
+                <span class="tooltip-wrapper">
+                    <span class="tooltip-trigger" id="tooltip-test">downloadable resources</span>
+                    <span class="tooltip-content">Hover events are tracked!</span>
+                </span>.
+            </p>
+            
+            <p style="margin-top: 1rem;">
+                Learn more about our 
+                <a href="https://carlkra.github.io/https-carlkra.github.io-/methodology.html" id="inline-link">methodology</a> 
+                and approach.
+            </p>
+            
+            <div class="download-grid">
+                <div class="download-card">
+                    <h3>📄 PDF Guide</h3>
+                    <p>Comprehensive analytics guide</p>
+                    <a href="https://carlkra.github.io/https-carlkra.github.io-/downloads/analytics-guide.pdf" class="download-link" id="download-pdf">
+                        Download PDF
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <h3>📊 DOCX Template</h3>
+                    <p>Implementation checklist</p>
+                    <a href="https://carlkra.github.io/https-carlkra.github.io-/downloads/implementation-template.docx" class="download-link" id="download-docx">
+                        Download DOCX
+                    </a>
+                </div>
+                
+                <div class="download-card">
+                    <h3>📈 XLSX Tracker</h3>
+                    <p>Event tracking spreadsheet</p>
+                    <a href="https://carlkra.github.io/https-carlkra.github.io-/downloads/event-tracker.xlsx" class="download-link" id="download-xlsx">
+                        Download XLSX
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="interactive-controls">
+            <h2>Interactive UI Controls</h2>
+            
+            <h3>Accordion Component</h3>
+            <div class="accordion" id="test-accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" data-accordion-id="item-1">
+                        <span>What is GA4 event tracking?</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            GA4 event tracking captures user interactions on your website to help you understand how visitors engage with your content.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" data-accordion-id="item-2">
+                        <span>How does parameter tracking work?</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Parameters provide additional context about events, such as page location, element type, and user actions.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" data-accordion-id="item-3">
+                        <span>What are custom events?</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Custom events are tracking points you define based on specific user interactions unique to your website.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Tab Navigation</h3>
+            <div class="tab-container" id="test-tabs">
+                <div class="tab-nav">
+                    <button class="tab-button active" data-tab="overview">Overview</button>
+                    <button class="tab-button" data-tab="features">Features</button>
+                    <button class="tab-button" data-tab="implementation">Implementation</button>
+                </div>
+                
+                <div class="tab-content active" data-content="overview">
+                    <h3>Overview</h3>
+                    <p>This test page demonstrates all GA4 event types defined in our tracking taxonomy.</p>
+                </div>
+                
+                <div class="tab-content" data-content="features">
+                    <h3>Features</h3>
+                    <p>Includes internal links, external links, file downloads, form tracking, video tracking, and UI control interactions.</p>
+                </div>
+                
+                <div class="tab-content" data-content="implementation">
+                    <h3>Implementation</h3>
+                    <p>Each element is properly structured with IDs and classes for automated detection and classification.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="lead-form-section">
+            <h2>Contact Form</h2>
+            <p>This form demonstrates lead generation tracking</p>
+            
+            <form class="lead-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button" id="form-submit">
+                    Submit Form
+                </button>
+            </form>
+        </section>
+
+        <section id="external-links-section">
+            <h2>External Resources</h2>
+            <p>These links navigate to external domains</p>
+            
+            <div class="link-grid">
+                <div class="link-card">
+                    <h3>Partner Site</h3>
+                    <p>Visit our partner organization</p>
+                    <a href="https://www.example-partner.com" target="_blank" class="external-link" id="external-partner">
+                        Visit Partner Site
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>Resource Center</h3>
+                    <p>Access external resources</p>
+                    <a href="https://www.example-resources.com" target="_blank" class="external-link interstitial-trigger" id="external-resources">
+                        View Resources
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <h3>Documentation</h3>
+                    <p>Read technical documentation</p>
+                    <a href="https://docs.example.com" target="_blank" class="external-link" id="external-docs">
+                        Read Docs
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="site-footer">
+        <div class="footer-content">
+            <nav>
+                <ul class="footer-nav" id="footer-navigation">
+                    <li><a href="https://carlkra.github.io/https-carlkra.github.io-/privacy.html" id="footer-privacy">Privacy Policy</a></li>
+                    <li><a href="https://carlkra.github.io/https-carlkra.github.io-/terms.html" id="footer-terms">Terms of Service</a></li>
+                    <li><a href="https://carlkra.github.io/https-carlkra.github.io-/sitemap.html" id="footer-sitemap">Sitemap</a></li>
+                </ul>
+            </nav>
+            
+            <h3 style="margin-top: 1rem; margin-bottom: 0.5rem;">Follow Us</h3>
+            <ul class="social-links" id="social-navigation">
+                <li><a href="https://twitter.com/example" target="_blank" id="social-twitter">Twitter</a></li>
+                <li><a href="https://facebook.com/example" target="_blank" id="social-facebook">Facebook</a></li>
+                <li><a href="https://youtube.com/example" target="_blank" id="social-youtube">YouTube</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <div class="interstitial-overlay" id="interstitial-modal">
+        <div class="interstitial-modal">
+            <h3>You are leaving this site</h3>
+            <p>You are about to navigate to an external website. Do you want to proceed?</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #7f8c8d;" id="interstitial-url"></p>
+            
+            <div class="interstitial-buttons">
+                <button class="interstitial-button cancel-button" id="interstitial-cancel">
+                    Cancel
+                </button>
+                <button class="interstitial-button proceed-button" id="interstitial-proceed">
+                    Proceed
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isActive = this.classList.contains('active');
+                
+                document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
+                document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+                
+                if (!isActive) {
+                    this.classList.add('active');
+                    content.classList.add('active');
+                }
+                
+                console.log('Accordion toggled:', this.dataset.accordionId, isActive ? 'collapse' : 'expand');
+            });
+        });
+
+        // Tab navigation
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector(`[data-content="${tabId}"]`).classList.add('active');
+                
+                console.log('Tab selected:', tabId);
+            });
+        });
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Form submission tracked! (Not actually submitted in test)');
+            console.log('Form submitted:', {
+                name: this.name.value,
+                email: this.email.value,
+                company: this.company.value,
+                message: this.message.value
+            });
+        });
+
+        // Interstitial modal
+        let interstitialTarget = null;
+
+        document.querySelectorAll('.interstitial-trigger').forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                interstitialTarget = this.href;
+                document.getElementById('interstitial-url').textContent = interstitialTarget;
+                document.getElementById('interstitial-modal').style.display = 'flex';
+                console.log('Interstitial launched for:', interstitialTarget);
+            });
+        });
+
+        document.getElementById('interstitial-cancel').addEventListener('click', function() {
+            document.getElementById('interstitial-modal').style.display = 'none';
+            interstitialTarget = null;
+            console.log('Interstitial cancelled');
+        });
+
+        document.getElementById('interstitial-proceed').addEventListener('click', function() {
+            console.log('Interstitial proceed clicked for:', interstitialTarget);
+            if (interstitialTarget) {
+                window.location.href = interstitialTarget;
+            }
+        });
+
+        // Video tracking
+        const video = document.getElementById('test-video');
+        let progressMilestones = [25, 50, 75];
+        let milestonesReached = [];
+
+        video.addEventListener('play', function() {
+            console.log('Video started:', {
+                title: 'Test Video',
+                duration: this.duration
+            });
+        });
+
+        video.addEventListener('timeupdate', function() {
+            const percentPlayed = (this.currentTime / this.duration) * 100;
+            
+            progressMilestones.forEach(milestone => {
+                if (percentPlayed >= milestone && !milestonesReached.includes(milestone)) {
+                    milestonesReached.push(milestone);
+                    console.log('Video progress:', {
+                        title: 'Test Video',
+                        percent: milestone,
+                        duration: this.duration
+                    });
+                }
+            });
+        });
+
+        video.addEventListener('ended', function() {
+            console.log('Video completed:', {
+                title: 'Test Video',
+                duration: this.duration
+            });
+        });
+
+        // Tooltip tracking
+        document.querySelectorAll('.tooltip-trigger').forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', function() {
+                console.log('Tooltip hovered:', this.id);
+            });
+        });
+
+        // Scroll tracking
+        let scrollMilestones = [25, 50, 75, 90];
+        let scrollMilestonesReached = [];
+
+        window.addEventListener('scroll', function() {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            
+            scrollMilestones.forEach(milestone => {
+                if (scrollPercent >= milestone && !scrollMilestonesReached.includes(milestone)) {
+                    scrollMilestonesReached.push(milestone);
+                    console.log('Scroll depth reached:', milestone + '%');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
